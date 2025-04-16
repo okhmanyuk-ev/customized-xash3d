@@ -46,6 +46,7 @@ GNU General Public License for more details.
 
 #define FILE_COPY_SIZE		(1024 * 1024)
 
+#define FI fs_FI
 fs_globals_t FI;
 qboolean      fs_ext_path = false;	// attempt to read\write from ./ or ../ pathes
 poolhandle_t  fs_mempool;
@@ -2073,7 +2074,7 @@ int FS_Flush( file_t *file )
 	FS_Purge( file );
 
 	// sync
-#if XASH_POSIX
+#if XASH_POSIX | EMSCRIPTEN
 	if( fsync( file->handle ) < 0 )
 		return EOF;
 #else
@@ -2899,6 +2900,7 @@ void FS_InitMemory( void )
 	fs_searchpaths = NULL;
 }
 
+#define g_engfuncs fs_engfuncs
 fs_interface_t g_engfuncs =
 {
 	_Con_Printf,

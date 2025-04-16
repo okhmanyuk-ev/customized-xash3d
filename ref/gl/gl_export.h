@@ -1,3 +1,4 @@
+#pragma once
 /*
 gl_export.h - opengl definition
 Copyright (C) 2007 Uncle Mike
@@ -19,9 +20,12 @@ GNU General Public License for more details.
 #define APIENTRY
 #endif
 
-#ifndef APIENTRY_LINKAGE
-#define APIENTRY_LINKAGE extern
-#endif
+#include "imdraw.h"
+#include "ref_api.h"
+#include <unordered_map>
+#include <sky_client/sky_client.h>
+
+int EXPORT GetRefAPI(int version, ref_interface_t* funcs, ref_api_t* engfuncs, ref_globals_t* globals);
 
 #if defined XASH_NANOGL || defined XASH_WES || defined XASH_REGAL
 #define XASH_GLES
@@ -31,6 +35,7 @@ GNU General Public License for more details.
 #define XASH_GLES
 #endif
 
+#if 0
 typedef uint GLenum;
 typedef byte GLboolean;
 typedef uint GLbitfield;
@@ -1850,6 +1855,7 @@ APIENTRY_LINKAGE void GL_FUNCTION( glTexImage2DMultisample )(GLenum target, GLsi
 #define pglGenVertexArrays glGenVertexArrays
 #define pglIsVertexArray glIsVertexArray
 #define pglSwapInterval glSwapInterval
+#endif
 #endif
 
 #ifdef __GNUC__

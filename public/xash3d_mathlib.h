@@ -179,6 +179,9 @@ static inline void SinCos( float radians, float *sine, float *cosine )
 	*cosine = cos(radians);
 }
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 float rsqrt( float number );
 float anglemod( float a );
 word FloatToHalf( float v );
@@ -299,6 +302,9 @@ extern int		boxpnt[6][4];
 extern const matrix3x4	m_matrix3x4_identity;
 extern const matrix4x4	m_matrix4x4_identity;
 extern const float		m_bytenormals[NUMVERTEXNORMALS][3];
+#ifdef __cplusplus
+}
+#endif
 
 #endif // XASH3D_MATHLIB_H
 

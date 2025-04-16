@@ -35,6 +35,15 @@ GNU General Public License for more details.
 #include "ref_common.h"
 #include "voice.h"
 
+#include <list>
+#include <string>
+#include <unordered_set>
+#include <unordered_map>
+#include <set>
+#include <map>
+#include <wadfile.h>
+#include <gl_export.h>
+#include <sky_client/sky_client.h>
 // client sprite types
 #define SPR_CLIENT		0	// client sprite for temp-entities or user-textures
 #define SPR_HUDSPRITE	1	// hud sprite
@@ -636,18 +645,22 @@ typedef struct
 	netadr_t serveradr;
 } client_static_t;
 
+/*
 #ifdef __cplusplus
 extern "C" {
 #endif
+*/
 
 extern client_t		cl;
 extern client_static_t	cls;
 extern clgame_static_t	clgame;
 extern gameui_static_t	gameui;
 
+/*
 #ifdef __cplusplus
 }
 #endif
+*/
 
 //
 // cvars
@@ -673,7 +686,7 @@ extern convar_t	cl_updaterate;
 extern convar_t	cl_solid_players;
 extern convar_t	cl_idealpitchscale;
 extern convar_t	cl_allow_levelshots;
-extern convar_t	cl_lightstyle_lerping;
+namespace engine { extern convar_t	cl_lightstyle_lerping; }
 extern convar_t	cl_draw_particles;
 extern convar_t	cl_draw_tracers;
 extern convar_t	cl_levelshot_name;
@@ -683,9 +696,9 @@ extern convar_t	cl_fixtimerate;
 extern convar_t	hud_fontscale;
 extern convar_t	hud_scale;
 extern convar_t hud_scale_minimal_width;
-extern convar_t	r_showtextures;
+namespace engine { extern convar_t	r_showtextures; }
 extern convar_t	cl_bmodelinterp;
-extern convar_t	cl_lw;		// local weapons
+namespace engine { extern convar_t	cl_lw; }		// local weapons
 extern convar_t	cl_charset;
 extern convar_t	cl_trace_messages;
 extern convar_t	cl_trace_events;
@@ -828,7 +841,7 @@ void NetAPI_CancelAllRequests( void );
 cl_entity_t *CL_GetLocalPlayer( void );
 model_t *CL_LoadClientSprite( const char *filename );
 model_t *CL_LoadModel( const char *modelname, int *index );
-HSPRITE pfnSPR_LoadExt( const char *szPicName, uint texFlags );
+engine::HSPRITE pfnSPR_LoadExt( const char *szPicName, uint texFlags );
 void SPR_AdjustSize( float *x, float *y, float *w, float *h );
 int CL_GetScreenInfo( SCREENINFO *pscrinfo );
 pmtrace_t *PM_CL_TraceLine( float *start, float *end, int flags, int usehull, int ignore_pe );
@@ -930,7 +943,7 @@ void SCR_DrawNetGraph( void );
 // cl_view.c
 //
 
-void V_Init (void);
+namespace engine { void V_Init (void); }
 void V_Shutdown( void );
 qboolean V_PreRender( void );
 void V_PostRender( void );

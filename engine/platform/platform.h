@@ -23,6 +23,10 @@ GNU General Public License for more details.
 #include "cursor_type.h"
 #include "key_modifiers.h"
 
+//#ifdef __cplusplus
+//extern "C" {
+//#endif
+
 /*
 ==============================================================================
 
@@ -206,6 +210,7 @@ typedef enum
 } rserr_t;
 
 struct vidmode_s;
+enum window_mode_e : int;
 typedef enum window_mode_e window_mode_t;
 // Window
 qboolean  R_Init_Video( const int type );
@@ -214,7 +219,13 @@ qboolean  VID_SetMode( void );
 rserr_t   R_ChangeDisplaySettings( int width, int height, window_mode_t window_mode );
 int       R_MaxVideoModes( void );
 struct vidmode_s *R_GetVideoMode( int num );
+#ifdef __cplusplus
+extern "C" {
+#endif
 void*     GL_GetProcAddress( const char *name ); // RenderAPI requirement
+#ifdef __cplusplus
+}
+#endif
 void      GL_UpdateSwapInterval( void );
 int GL_SetAttribute( int attr, int val );
 int GL_GetAttribute( int attr, int *val );
@@ -255,5 +266,9 @@ qboolean VoiceCapture_Init( void );
 void VoiceCapture_Shutdown( void );
 qboolean VoiceCapture_Activate( qboolean activate );
 qboolean VoiceCapture_Lock( qboolean lock );
+
+//#ifdef __cplusplus
+//}
+//#endif
 
 #endif // PLATFORM_H

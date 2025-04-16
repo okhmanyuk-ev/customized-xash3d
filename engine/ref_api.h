@@ -29,6 +29,7 @@ GNU General Public License for more details.
 #include "com_image.h"
 #include "filesystem.h"
 #include "common/protocol.h"
+#include "cvardef.h"
 
 // RefAPI changelog:
 // 1. Initial release
@@ -671,7 +672,6 @@ typedef int (*REFAPI)( int version, ref_interface_t *pFunctionTable, ref_api_t* 
 	ENGINE_SHARED_CVAR( f, r_dynamic ) \
 	ENGINE_SHARED_CVAR( f, r_drawentities ) \
 	ENGINE_SHARED_CVAR( f, r_decals ) \
-	ENGINE_SHARED_CVAR( f, r_showhull ) \
 	ENGINE_SHARED_CVAR( f, gl_vsync ) \
 	ENGINE_SHARED_CVAR( f, gl_clear ) \
 	ENGINE_SHARED_CVAR( f, cl_himodels ) \
