@@ -66,7 +66,7 @@ enum
 	FCVAR_GAMEUIDLL        = 1 << 14, // defined by menu.dll
 	FCVAR_CHEAT            = 1 << 15, // cannot be changed if sv_cheats is 0
 
-#if REF_DLL || ENGINE_DLL // Xash3D internal flags, MUST NOT be used outside of engine
+//#if REF_DLL || ENGINE_DLL // Xash3D internal flags, MUST NOT be used outside of engine
 	FCVAR_RENDERINFO   = 1 << 16, // set to cause it to be saved to video.cfg
 	FCVAR_READ_ONLY    = 1 << 17, // display only, cannot be set by user at all
 	FCVAR_EXTENDED     = 1 << 18, // extended cvar structure
@@ -77,7 +77,7 @@ enum
 	FCVAR_USER_CREATED = 1 << 23, // created by a set command
 
 	FCVAR_REFDLL     = 1 << 29, // (Xash3D FWGS internal flag) defined by the renderer DLL
-#endif // REF_DLL || ENGINE_DLL
+//#endif // REF_DLL || ENGINE_DLL
 
 	FCVAR_LATCH      = 1 << 30, // (Xash3D FWGS public flag, was FCVAR_FILTERABLE in Xash3D) save changes until server restart
 };
@@ -93,16 +93,21 @@ typedef struct cvar_s cvar_t;
 
 STATIC_CHECK_SIZEOF( struct cvar_s, 20, 32 );
 
-#if REF_DLL || ENGINE_DLL // Xash3D internal cvar format, MUST NOT be used outside of engine
+//#if REF_DLL || ENGINE_DLL // Xash3D internal cvar format, MUST NOT be used outside of engine
 struct convar_s {
 	char     *name;
-	char     *string;
+	const char     *string;
 	uint32_t  flags;
 	float     value;
 	struct convar_s *next;
 	char     *desc;
-	char     *def_string;
+	const char     *def_string;
+
+#ifdef __cplusplus
+	auto operator->() { return this; }
+#endif
 };
+
 typedef struct convar_s convar_t;
 
 #if XASH_64BIT
@@ -114,9 +119,9 @@ typedef struct convar_s convar_t;
 #define CVAR_CHECK_SENTINEL( cv )	((uintptr_t)(cv)->next == CVAR_SENTINEL)
 
 #define CVAR_DEFINE( cv, cvname, cvstr, cvflags, cvdesc ) \
-	convar_t cv = { (char*)cvname, (char*)cvstr, cvflags, 0.0f, (void *)CVAR_SENTINEL, (char*)cvdesc, NULL }
+	convar_t cv = { (char*)cvname, (char*)cvstr, cvflags, 0.0f, (convar_s *)CVAR_SENTINEL, (char*)cvdesc, NULL }
 
 #define CVAR_DEFINE_AUTO( cv, cvstr, cvflags, cvdesc ) CVAR_DEFINE( cv, #cv, cvstr, cvflags, cvdesc )
-#endif // REF_DLL || ENGINE_DLL
+//#endif // REF_DLL || ENGINE_DLL
 
 #endif // CVAR

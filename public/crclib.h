@@ -26,6 +26,9 @@ typedef struct
 	uint	in[16];
 } MD5Context_t;
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 void CRC32_Init( uint32_t *pulCRC );
 byte CRC32_BlockSequence( byte *base, int length, int sequence );
 void CRC32_ProcessBuffer( uint32_t *pulCRC, const void *pBuffer, int nBuffer );
@@ -36,5 +39,8 @@ void MD5Update( MD5Context_t *ctx, const byte *buf, uint len );
 void MD5Final( byte digest[16], MD5Context_t *ctx );
 uint COM_HashKey( const char *string, uint hashSize );
 char *MD5_Print( byte hash[16] );
+#ifdef __cplusplus
+}
+#endif
 
 #endif // CRCLIB_H

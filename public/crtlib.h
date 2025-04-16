@@ -22,6 +22,12 @@ GNU General Public License for more details.
 #include "build.h"
 #include "xash3d_types.h"
 
+#ifdef WIN32
+#define HAVE_STRICMP 1
+#else
+#define HAVE_STRCASECMP 1
+#endif
+
 #ifdef __cplusplus
 extern "C"
 {

@@ -117,30 +117,30 @@ typedef struct fs_archive_s
 	qboolean real_archive;
 } fs_archive_t;
 
-extern fs_globals_t  FI;
+extern fs_globals_t  fs_FI;
 extern searchpath_t *fs_writepath;
 extern poolhandle_t  fs_mempool;
-extern fs_interface_t g_engfuncs;
+extern fs_interface_t fs_engfuncs;
 extern qboolean      fs_ext_path;
 extern char          fs_rodir[MAX_SYSPATH];
 extern char          fs_rootdir[MAX_SYSPATH];
 extern const fs_api_t     g_api;
 extern const fs_archive_t g_archives[];
 
-#define GI FI.GameInfo
+#define GI fs_FI.GameInfo
 
-#define Mem_Malloc( pool, size ) g_engfuncs._Mem_Alloc( pool, size, false, __FILE__, __LINE__ )
-#define Mem_Calloc( pool, size ) g_engfuncs._Mem_Alloc( pool, size, true, __FILE__, __LINE__ )
-#define Mem_Realloc( pool, ptr, size ) g_engfuncs._Mem_Realloc( pool, ptr, size, true, __FILE__, __LINE__ )
-#define Mem_Free( mem ) g_engfuncs._Mem_Free( mem, __FILE__, __LINE__ )
-#define Mem_AllocPool( name ) g_engfuncs._Mem_AllocPool( name, __FILE__, __LINE__ )
-#define Mem_FreePool( pool ) g_engfuncs._Mem_FreePool( pool, __FILE__, __LINE__ )
+#define Mem_Malloc( pool, size ) fs_engfuncs._Mem_Alloc( pool, size, false, __FILE__, __LINE__ )
+#define Mem_Calloc( pool, size ) fs_engfuncs._Mem_Alloc( pool, size, true, __FILE__, __LINE__ )
+#define Mem_Realloc( pool, ptr, size ) fs_engfuncs._Mem_Realloc( pool, ptr, size, true, __FILE__, __LINE__ )
+#define Mem_Free( mem ) fs_engfuncs._Mem_Free( mem, __FILE__, __LINE__ )
+#define Mem_AllocPool( name ) fs_engfuncs._Mem_AllocPool( name, __FILE__, __LINE__ )
+#define Mem_FreePool( pool ) fs_engfuncs._Mem_FreePool( pool, __FILE__, __LINE__ )
 
-#define Con_Printf  (*g_engfuncs._Con_Printf)
-#define Con_DPrintf (*g_engfuncs._Con_DPrintf)
-#define Con_Reportf (*g_engfuncs._Con_Reportf)
-#define Sys_Error   (*g_engfuncs._Sys_Error)
-#define Sys_GetNativeObject (*g_engfuncs._Sys_GetNativeObject)
+#define Con_Printf  (*fs_engfuncs._Con_Printf)
+#define Con_DPrintf (*fs_engfuncs._Con_DPrintf)
+#define Con_Reportf (*fs_engfuncs._Con_Reportf)
+#define Sys_Error   (*fs_engfuncs._Sys_Error)
+#define Sys_GetNativeObject (*fs_engfuncs._Sys_GetNativeObject)
 
 //
 // filesystem.c

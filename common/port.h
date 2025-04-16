@@ -20,6 +20,15 @@ GNU General Public License for more details.
 #include "build.h"
 
 #if !XASH_WIN32
+	#ifdef EMSCRIPTEN
+		#include <emscripten.h>
+		#include <dirent.h>
+		#include <errno.h>
+		#include <unistd.h>
+		
+		#define _mkdir( x ) mkdir( x, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH )
+	#endif
+
 	#if XASH_APPLE
 		#include <sys/syslimits.h>
 		#define OS_LIB_EXT "dylib"
@@ -62,10 +71,12 @@ GNU General Public License for more details.
 		int x, y;
 	} POINT;
 #else // WIN32
+#ifdef __cplusplus
+#else
 	#define open _open
 	#define read _read
 	#define alloca _alloca
-
+#endif
 	#define HSPRITE WINAPI_HSPRITE
 		#define WIN32_LEAN_AND_MEAN
 		#include <winsock2.h>

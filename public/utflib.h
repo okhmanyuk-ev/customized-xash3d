@@ -25,6 +25,9 @@ typedef struct utfstate_s
 	uint8_t k;
 } utfstate_t;
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 // feed utf8 characters one by one
 // if it returns 0, feed more
 // utfstate_t must be zero initialized
@@ -40,5 +43,8 @@ size_t Q_UTF16ToUTF8( char *dst, size_t dstsize, const uint16_t *src, size_t src
 // function to convert Unicode codepoints into CP1251 or CP1252
 uint32_t Q_UnicodeToCP1251( uint32_t uc );
 uint32_t Q_UnicodeToCP1252( uint32_t uc );
+#ifdef __cplusplus
+}
+#endif
 
 #endif // UTFLIB_H

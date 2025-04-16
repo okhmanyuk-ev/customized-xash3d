@@ -16,10 +16,6 @@ GNU General Public License for more details.
 #ifndef COMMON_H
 #define COMMON_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /*
 ===================================================================================================================================
 Legend:
@@ -44,6 +40,7 @@ XASH SPECIFIC			- sort of hack that works only in Xash3D not in GoldSrc
 #include <stdio.h>
 #include <stdlib.h> // rand, adbs
 #include <stdarg.h> // va
+#include <string>
 
 #if !XASH_WIN32
 #include <stddef.h> // size_t
@@ -147,8 +144,8 @@ typedef enum
 #define FORCE_DRAW_VERSION_TIME 5.0 // draw version for 5 seconds
 
 #ifdef _DEBUG
-void DBG_AssertFunction( qboolean fExpr, const char* szExpr, const char* szFile, int szLine, const char* szMessage );
-#define Assert( f )		DBG_AssertFunction( f, #f, __FILE__, __LINE__, NULL )
+namespace engine { void DBG_AssertFunction(qboolean fExpr, const char* szExpr, const char* szFile, int szLine, const char* szMessage); }
+#define Assert( f )		engine::DBG_AssertFunction( f, #f, __FILE__, __LINE__, NULL )
 #else
 #define Assert( f )
 #endif
@@ -415,9 +412,21 @@ qboolean Mem_IsAllocatedExt( poolhandle_t poolptr, void *data );
 void Mem_PrintList( size_t minallocationsize );
 void Mem_PrintStats( void );
 
-#define Mem_Malloc( pool, size ) _Mem_Alloc( pool, size, false, __FILE__, __LINE__ )
-#define Mem_Calloc( pool, size ) _Mem_Alloc( pool, size, true, __FILE__, __LINE__ )
-#define Mem_Realloc( pool, ptr, size ) _Mem_Realloc( pool, ptr, size, true, __FILE__, __LINE__ )
+namespace engine
+{
+	struct ConversionPtr
+	{
+		void* ptr;
+
+		template<typename T>
+		operator T* () { return static_cast<T*>(ptr); }
+	};
+
+	ConversionPtr Mem_Malloc(poolhandle_t pool, size_t size);
+	ConversionPtr Mem_Calloc(poolhandle_t pool, size_t size);
+	ConversionPtr Mem_Realloc(poolhandle_t pool, void* ptr, size_t size);
+}
+
 #define Mem_Free( mem ) _Mem_Free( mem, __FILE__, __LINE__ )
 #define Mem_AllocPool( name ) _Mem_AllocPool( name, __FILE__, __LINE__ )
 #define Mem_FreePool( pool ) _Mem_FreePool( pool, __FILE__, __LINE__ )
@@ -585,7 +594,7 @@ int pfnIsInGame( void );
 float pfnTime( void );
 #define copystring( s ) _copystring( host.mempool, s, __FILE__, __LINE__ )
 #define SV_CopyString( s ) _copystring( svgame.stringspool, s, __FILE__, __LINE__ )
-#define freestring( s ) if( s != NULL ) { Mem_Free( s ); s = NULL; }
+#define freestring( s ) if( s != NULL ) { Mem_Free( (void*)s ); s = NULL; }
 char *_copystring( poolhandle_t mempool, const char *s, const char *filename, int fileline );
 
 // CS:CS engfuncs (stubs)
@@ -702,7 +711,11 @@ void SV_ExecLoadLevel( void );
 void SV_ExecLoadGame( void );
 void SV_ExecChangeLevel( void );
 void CL_WriteMessageHistory( void );
+#ifdef XASH_WEBSOCKET
+void CL_Disconnect( bool reconnect = false );
+#else
 void CL_Disconnect( void );
+#endif
 void CL_ClearEdicts( void );
 void CL_Crashed( void );
 char *SV_Serverinfo( void );
@@ -778,7 +791,7 @@ byte TextureToGamma( byte );
 uint LightToTexGammaEx( uint );
 uint ScreenGammaTable( uint );
 uint LinearGammaTable( uint );
-void V_Init( void );
+namespace engine { void V_Init( void ); }
 void V_CheckGamma( void );
 void V_CheckGammaEnd( void );
 
@@ -833,7 +846,4 @@ void SoundList_Shutdown( void );
 #error "common.h in ref_dll"
 #endif
 
-#ifdef __cplusplus
-}
-#endif
 #endif//COMMON_H

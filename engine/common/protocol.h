@@ -16,6 +16,10 @@ GNU General Public License for more details.
 #ifndef NET_PROTOCOL_H
 #define NET_PROTOCOL_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define PROTOCOL_VERSION		49
 
 // server to client
@@ -354,5 +358,8 @@ extern const char	*clc_strings[clc_lastmsg+1];
 // #define MAX_GOLDSRC_EDICTS        BIT( MAX_ENTITY_BITS )
 #define MAX_GOLDSRC_EDICTS        ( BIT( MAX_ENTITY_BITS ) + ( MAX_CLIENTS * 15 ))
 #define LAST_GOLDSRC_EDICT        ( BIT( MAX_ENTITY_BITS ) - 1 )
+#ifdef __cplusplus
+}
+#endif
 
 #endif//NET_PROTOCOL_H
