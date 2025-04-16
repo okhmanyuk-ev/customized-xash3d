@@ -221,6 +221,8 @@ typedef struct fs_interface_t
 typedef int (*FSAPI)( int version, fs_api_t *api, fs_globals_t **globals, fs_interface_t *interface );
 #define GET_FS_API "GetFSAPI"
 
+int EXPORT GetFSAPI(int version, fs_api_t* api, fs_globals_t** globals, fs_interface_t* engfuncs);
+
 #ifdef __cplusplus
 }
 #endif // __cplusplus

@@ -29,6 +29,9 @@ GNU General Public License for more details.
 #include "custom.h"
 #include "world.h"
 
+#include <vector>
+#include <string>
+
 //=============================================================================
 
 #define SV_UPDATE_MASK	(SV_UPDATE_BACKUP - 1)
@@ -567,6 +570,7 @@ void SV_UpdateServerInfo( void );
 void SV_EndRedirect( host_redirect_t *rd );
 void SV_RejectConnection( netadr_t from, const char *fmt, ... ) _format( 2 );
 void SV_GetPlayerCount( int *clients, int *bots );
+void SV_GetPlayerNames(std::vector<std::string>& players, std::vector<std::string>& bots); // sky
 
 //
 // sv_cmds.c

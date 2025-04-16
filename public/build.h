@@ -182,8 +182,12 @@ Then you can use another oneliner to query all variables:
 //
 //================================================================
 #if defined __x86_64__ || defined _M_X64
+#ifdef LINUX
+	#define XASH_X86 1
+#else
 	#define XASH_64BIT 1
 	#define XASH_AMD64 1
+#endif
 #elif defined __i386__ || defined _X86_ || defined _M_IX86
 	#define XASH_X86 1
 #elif defined __aarch64__ || defined _M_ARM64

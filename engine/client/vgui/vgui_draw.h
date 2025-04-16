@@ -16,6 +16,10 @@ GNU General Public License for more details.
 #ifndef VGUI_DRAW_H
 #define VGUI_DRAW_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //
 // vgui_draw.c
 //
@@ -33,5 +37,9 @@ qboolean VGui_IsActive( void );
 void *VGui_GetPanel( void );
 void VGui_ReportTextInput( const char *text );
 void VGui_UpdateInternalCursorState( VGUI_DefaultCursor cursorType );
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // VGUI_DRAW_H

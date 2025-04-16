@@ -9,7 +9,7 @@ typedef struct vidmode_s
 	int			height;
 } vidmode_t;
 
-typedef enum window_mode_e
+typedef enum window_mode_e : int
 {
 	WINDOW_MODE_WINDOWED = 0,
 	WINDOW_MODE_FULLSCREEN,
@@ -17,6 +17,7 @@ typedef enum window_mode_e
 	WINDOW_MODE_COUNT,
 } window_mode_t;
 
+namespace engine {
 typedef struct
 {
 	void*	context; // handle to GL rendering context
@@ -31,6 +32,7 @@ typedef struct
 } glwstate_t;
 
 extern glwstate_t glw_state;
+}
 
 #define VID_MIN_HEIGHT 200
 #define VID_MIN_WIDTH 320
@@ -46,5 +48,7 @@ void R_SaveVideoMode( int w, int h, int render_w, int render_h, qboolean maximiz
 void VID_SetDisplayTransform( int *render_w, int *render_h );
 void VID_CheckChanges( void );
 const char *VID_GetModeString( int vid_mode );
+
+extern float gScale;
 
 #endif // VID_COMMON

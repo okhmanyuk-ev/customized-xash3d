@@ -16,7 +16,8 @@ GNU General Public License for more details.
 #include <stdio.h>
 #include <time.h>
 #include <stdarg.h>
-#include ALLOCA_H
+//#include ALLOCA_H
+#include "malloc.h"
 #include "crtlib.h"
 #include "filesystem.h"
 #include "filesystem_internal.h"
@@ -39,6 +40,11 @@ GNU General Public License for more details.
 
 // This is a macro because pointers returned by alloca
 // shouldn't leave current scope
+
+#ifdef EMSCRIPTEN
+#define alloca malloc
+#endif
+
 #define FixupPath( var, str ) \
 	const size_t var ## _size = Q_strlen(( str )) + 1; \
 	char * const var = static_cast<char *>( alloca( var ## _size )); \

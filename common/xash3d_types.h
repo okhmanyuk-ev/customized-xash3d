@@ -1,4 +1,5 @@
 // basic typedefs
+#pragma once
 #ifndef XASH_TYPES_H
 #define XASH_TYPES_H
 
@@ -58,8 +59,8 @@ typedef uint64_t longtime_t;
 
 #define BIT( n )		( 1U << ( n ))
 #define BIT64( n )		( 1ULL << ( n ))
-#define SetBits( iBitVector, bits )	((iBitVector) = (iBitVector) | (bits))
-#define ClearBits( iBitVector, bits )	((iBitVector) = (iBitVector) & ~(bits))
+#define SetBits( iBitVector, bits )	(*(uint32_t*)&(iBitVector) |= (uint32_t)(bits))
+#define ClearBits( iBitVector, bits )	(*(uint32_t*)&(iBitVector) = *(uint32_t*)&(iBitVector) & ~(uint32_t)(bits))
 #define FBitSet( iBitVector, bit )	((iBitVector) & (bit))
 
 #ifndef __cplusplus

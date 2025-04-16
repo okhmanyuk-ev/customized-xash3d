@@ -16,10 +16,6 @@ GNU General Public License for more details.
 #ifndef SYSTEM_H
 #define SYSTEM_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include "port.h"
 
 #include <setjmp.h>
@@ -96,7 +92,4 @@ void Wcon_SetStatus( const char *pStatus );
 // text messages
 #define Msg	Con_Printf
 
-#ifdef __cplusplus
-}
-#endif
 #endif//SYSTEM_H
