@@ -1266,9 +1266,11 @@ static void COM_Frame()
 	{
 		sync_inited = true;
 
-		EM_ASM(
-			FS.mkdir('/valve/downloaded');
-			FS.mount(IDBFS, {}, '/valve/downloaded');
+		EM_ASM({
+			var gameDir = UTF8ToString($0);
+			var path = '/' + gameDir + '/downloaded';
+			FS.mkdir(path);
+			FS.mount(IDBFS, {}, path);
 			Module.syncdone = 0;
 			FS.syncfs(true, function(err) {
 				if (err) {
@@ -1276,7 +1278,7 @@ static void COM_Frame()
 				}
 				Module.syncdone = 1;
 			});
-		);
+		}, XASH_GAMEDIR);
 	}
 
 	if (emscripten_run_script_int("Module.syncdone") == 0)

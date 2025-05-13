@@ -102,7 +102,7 @@ static qboolean CheckSkybox( const char *name, char out[6][MAX_STRING] )
 		for( j = 0; j < SKYBOX_MAX_SIDES; j++ )
 		{
 			// build side name
-			Q_snprintf( sidename, sizeof( sidename ), "%s%s.%s", name, r_skyBoxSuffix[j], /*skybox_ext[i]*/"bmp");
+			Q_snprintf( sidename, sizeof( sidename ), "%s%s.%s", name, r_skyBoxSuffix[j], /*skybox_ext[i]*/"tga");
 		//	if(gEngfuncs.fsapi->FileExists( sidename, false ))
 			{
 				Q_strncpy( out[j], sidename, sizeof( out[j] ));

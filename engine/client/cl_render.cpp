@@ -219,7 +219,7 @@ static intptr_t pfnRenderGetParm( int parm, int arg )
 	return CL_RenderGetParm( parm, arg, true );
 }
 
-static render_api_t gRenderAPI =
+render_api_t gRenderAPI =
 {
 	pfnRenderGetParm, // GL_RenderGetParm,
 	NULL, // R_GetDetailScaleForTexture,

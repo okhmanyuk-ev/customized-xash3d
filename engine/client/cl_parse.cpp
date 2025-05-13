@@ -1517,6 +1517,7 @@ void CL_UpdateUserPings( sizebuf_t *msg )
 
 static void CL_SendConsistencyInfo( sizebuf_t *msg )
 {
+	return;
 	qboolean		user_changed_diskfile;
 	vec3_t		mins, maxs;
 	string		filename;

@@ -197,6 +197,7 @@ should a flip the viewmodel if cl_righthand is set to 1
 */
 static qboolean R_AllowFlipViewModel( cl_entity_t *e )
 {
+	return true;
 	if( cl_righthand && cl_righthand->value > 0 )
 	{
 		if( e == tr.viewent )
