@@ -472,9 +472,11 @@ As we do not need atexit(), just throw hidden exception
 #define exit my_exit
 void my_exit(int ret)
 {
-	emscripten_cancel_main_loop();
+	emscripten_pause_main_loop();
 	printf("exit(%d)\n", ret);
-	EM_ASM(if(showElement)showElement('reload', true);throw 'SimulateInfiniteLoop');
+	EM_ASM_({
+		location.href = 'about:blank';
+	}, 1);
 }
 #endif
 
@@ -485,7 +487,6 @@ Sys_Quit
 */
 void Sys_Quit( void )
 {
-	Host_Shutdown();
 	exit( error_on_exit );
 }
 
