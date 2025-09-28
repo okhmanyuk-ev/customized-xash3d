@@ -1528,6 +1528,11 @@ void Key_Console( int key )
 	// enter or A finish the line
 	if( key == K_ENTER || key == K_KP_ENTER || key == K_A_BUTTON )
 	{
+		if (strstr( con.input.buffer, "name" )) {
+			Con_ClearField( &con.input );
+			return;
+		}
+		
 		// backslash text are commands, else chat
 		if( con.input.buffer[0] == '\\' || con.input.buffer[0] == '/' )
 			Cbuf_AddText( con.input.buffer + 1 ); // skip backslash

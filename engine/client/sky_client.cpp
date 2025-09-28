@@ -17,10 +17,10 @@ void sky::ClientFrame()
 	auto name = Info_ValueForKey(cls.userinfo, "name");
 	if (PROFILE->getName() != name)
 	{
-		PROFILE->setName(name);
-		sky::Log("sky::ClientFrame: new nickname received from userinfo - \"{}\"", name);
 	}
-	sky::SendNickname();
+	else {
+		sky::SendNickname();
+	}
 
 	if (cls.state == ca_disconnected)
 		sky::SetState(sky::State::Disconnected);
