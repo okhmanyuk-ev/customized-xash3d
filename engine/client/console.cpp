@@ -22,6 +22,10 @@ GNU General Public License for more details.
 #include "wadfile.h"
 #include "input.h"
 
+#ifdef EMSCRIPTEN
+#include <emscripten/emscripten.h>
+#endif
+
 using namespace engine;
 
 static CVAR_DEFINE_AUTO( scr_conspeed, "600", FCVAR_ARCHIVE, "console moving speed" );
@@ -1664,6 +1668,19 @@ void Key_Message( int key )
 	{
 		if( con.chat.buffer[0] && cls.state == ca_active )
 		{
+
+		#ifdef EMSCRIPTEN
+
+			EM_ASM({
+				sendToChat(UTF8ToString($0));
+			}, con.chat.buffer);
+
+			Key_SetKeyDest( key_game );
+			Con_ClearField( &con.chat );
+			return;
+		
+		#endif
+
 			Q_snprintf( buffer, sizeof( buffer ), "%s \"%s\"\n", con.chat_cmd, con.chat.buffer );
 
 			if( g_messagemode_privileged )
