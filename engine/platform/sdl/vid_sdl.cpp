@@ -60,8 +60,8 @@ public:
 
 	void resize(int width, int height) override {}
 	void setTitle(const std::string& text) override {}
-	void hideCursor() override {}
-	void showCursor() override {}
+	void setCursorMode(Platform::Input::CursorMode mode) override {};
+	Platform::Input::CursorMode getCursorMode() const override { return Platform::Input::CursorMode::Normal; };
 	void setCursorPos(int x, int y) override {}
 
 	std::optional<glm::ivec2> getCursorPos() const override { return mCursorPos; }
@@ -92,6 +92,12 @@ public:
 	void setClipboardText(const std::string& text) override {}
 
 	const std::vector<std::string>& getArguments() const override { return {}; }
+
+	void updateGamepadMapping(const char* str) override {};
+	bool isJoystickPresent(int index) const  override { return false; };
+	const unsigned char* getJoystickButtons(int jid, int* count) const  override { return nullptr; };
+	const float* getJoystickAxes(int jid, int* count) const  override { return nullptr; };
+	bool getGamepadState(int jid, Platform::Input::Joystick::GamepadState* state) const  override { return false; };
 
 private:
 	int mWidth = 0;

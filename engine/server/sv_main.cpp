@@ -226,11 +226,11 @@ static void Sky_SendHeartbeat()
 static void Sky_InitServer()
 {
 	gRoomClient.emplace();
-	Actions::Run(Actions::Collection::RepeatInfinite([] {
+	sky::RunAction(sky::Actions::RepeatInfinite([] {
 		const auto Delay = 5.0f;
-		return Actions::Collection::Delayed(Delay, Actions::Collection::Execute([] {
+		return sky::Actions::Delayed(Delay, [] {
 			Sky_SendHeartbeat();
-		}));
+		});
 	}));
 }
 

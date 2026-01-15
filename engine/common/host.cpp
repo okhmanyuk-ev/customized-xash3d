@@ -1284,7 +1284,7 @@ static void COM_Frame()
 #endif
 
 	Host_FrameNewTime = Sys_DoubleTime();
-	SCHEDULER->frame();
+	sky::Scheduler::Instance->frame();
 	COM_Frame(Host_FrameNewTime - Host_FrameOldTime);
 	Host_FrameOldTime = Host_FrameNewTime;
 }
