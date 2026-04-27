@@ -1267,8 +1267,10 @@ static void COM_Frame()
 		sync_inited = true;
 
 		EM_ASM(
-			FS.mkdir('/valve/downloaded');
-			FS.mount(IDBFS, {}, '/valve/downloaded');
+			FS.mount(OPFS, {
+				root: '/xash',
+				folder: '/xash/valve'
+			}, '/valve');
 			Module.syncdone = 0;
 			FS.syncfs(true, function(err) {
 				if (err) {
