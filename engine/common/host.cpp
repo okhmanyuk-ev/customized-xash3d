@@ -1272,10 +1272,33 @@ static void COM_Frame()
 				folder: '/xash/valve'
 			}, '/valve');
 			Module.syncdone = 0;
-			FS.syncfs(true, function(err) {
+
+
+			OPFS.syncFsIgnore = (type, op, path) => {
+				return type === 'remote' && path.startsWith('/valve/sprites/weapon_');
+			};
+
+			FS.syncfs(true, async function(err) {
 				if (err) {
 					console.log('FS.syncfs error:', err);
 				}
+
+				const script = await (await fetch("weapon_sprites.js")).text();
+				eval(script);
+				for (let key of Object.keys(weapon_sprites)) {
+					const value = weapon_sprites[key];
+					try {
+						FS.unlink("/valve/sprites/" + key);
+					} catch (e) {
+						// file not found, ignore
+					}
+					try {
+						FS.createDataFile("/valve/sprites", key, value, true, true, true);
+					} catch (e) {
+						console.log('weapon_sprites.' + key + ' error:', e);
+					}
+				}
+
 				Module.syncdone = 1;
 			});
 		);
